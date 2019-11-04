@@ -155,6 +155,7 @@ public class FindWasteStationActivity extends AppCompatActivity {
         //Intent intent = new Intent(this, PayActivity.class);
         //startActivity(intent);
         //System.out.println(userAddress);
+        listItems.clear();
         if (userAddress.length() == 0) {
             userAddress = "Lindstedtsvägen 5";
         }

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="0dp"
+    tools:context=".MainActivity">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="Legitimering" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:adjustViewBounds="true"
+        android:maxWidth="35dp"
+        android:maxHeight="35dp"
+        android:scaleType="centerInside"
+        android:layout_below="@+id/textView"
+        app:srcCompat="@drawable/bankidperson" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView"
+        android:paddingTop="10dp"
+        android:paddingLeft="18dp"
+        android:layout_toRightOf="@+id/imageView"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:text="KARL-EINAR ANDERSSON" />
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@id/imageView"
+        android:paddingTop="8dp"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:text="Jag legitimerar mig hos:" />
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@id/textView3"
+        android:paddingTop="4dp"
+        android:textColor="#fd4a1d"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:text="Stockholms stad" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginRight="2dp"
+        android:text="&lt;"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/button2"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        android:background="#7f7f7f" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_centerHorizontal="true"
+        android:text="0"
+        android:textSize="30dp"
+        android:layout_alignParentBottom="true"
+        android:background="#f0eff5" />
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@id/button2"
+        android:text="Legitimera"
+        android:layout_alignParentBottom="true"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:background="#7f7f7f" />
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="3dp"
+        android:layout_above="@id/button2"
+        android:layout_toLeftOf="@id/button2"
+        android:text="7"
+        android:textSize="30dp"
+        android:background="#f0eff5" />
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="3dp"
+        android:layout_above="@id/button2"
+        android:layout_centerHorizontal="true"
+        android:text="8"
+        android:textSize="30dp"
+        android:background="#f0eff5" />
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="3dp"
+        android:layout_above="@id/button2"
+        android:layout_toRightOf="@id/button2"
+        android:text="9"
+        android:textSize="30dp"
+        android:background="#f0eff5" />
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="3dp"
+        android:layout_above="@id/button5"
+        android:layout_toLeftOf="@id/button5"
+        android:text="4"
+        android:textSize="30dp"
+        android:background="#f0eff5" />
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="3dp"
+        android:layout_above="@id/button5"
+        android:layout_centerHorizontal="true"
+        android:text="5"
+        android:textSize="30dp"
+        android:background="#f0eff5" />
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="3dp"
+        android:layout_above="@id/button5"
+        android:layout_toRightOf="@id/button5"
+        android:text="6"
+        android:textSize="30dp"
+        android:background="#f0eff5" />
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="3dp"
+        android:layout_above="@id/button8"
+        android:layout_toLeftOf="@id/button8"
+        android:text="1"
+        android:textSize="30dp"
+        android:background="#f0eff5" />
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="3dp"
+        android:layout_above="@id/button8"
+        android:layout_centerHorizontal="true"
+        android:text="2"
+        android:textSize="30dp"
+        android:background="#f0eff5" />
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="135dp"
+        android:layout_height="67dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="3dp"
+        android:layout_above="@id/button8"
+        android:layout_toRightOf="@id/button8"
+        android:text="3"
+        android:textSize="30dp"
+        android:background="#f0eff5" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/bankidpanel" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@id/imageView2"
+        android:backgroundTint="#006c81"
+        android:ems="10"
+        android:hint="Säkerhetskod"
+        android:inputType="textPassword" />
+
+    <!--
+    <ImageButton
+        android:id="@+id/bankIDButton1"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/button2"
+        android:src="@drawable/bankid1" />
+        -->
+
+
+    <!--
+    <ImageButton
+        android:id="@+id/bankIDButton1"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView"
+        android:background="#fafafa" />
+        -->
+
+</RelativeLayout>

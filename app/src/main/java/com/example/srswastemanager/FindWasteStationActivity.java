@@ -138,10 +138,15 @@ public class FindWasteStationActivity extends AppCompatActivity {
         findWasteStationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                editText.clearFocus();
-                findWasteStations(editText.getText().toString());
+                try {
+                    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    editText.clearFocus();
+                    findWasteStations(editText.getText().toString());
+                }
+                catch (Exception e) {
+                    findWasteStations("");
+                }
             }
         });
     }
@@ -150,6 +155,9 @@ public class FindWasteStationActivity extends AppCompatActivity {
         //Intent intent = new Intent(this, PayActivity.class);
         //startActivity(intent);
         //System.out.println(userAddress);
+        if (userAddress.length() == 0) {
+            userAddress = "Lindstedtsvägen 5";
+        }
 
         distanceToWasteStationAddress = new HashMap<Float, String>();
         Location userLocation = new Location("");

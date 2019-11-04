@@ -50,6 +50,7 @@ public class FindWasteStationActivity extends AppCompatActivity {
     ListView wasteStations;
     ArrayList<Spanned> listItems=new ArrayList<Spanned>();
     ArrayAdapter<Spanned> adapter;
+    String previousSearch = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,7 +177,16 @@ public class FindWasteStationActivity extends AppCompatActivity {
         //System.out.println(userAddress);
         listItems.clear();
         if (userAddress.length() == 0) {
-            userAddress = "Lindstedtsvägen 5";
+            if (previousSearch != "") {
+                userAddress = previousSearch;
+            }
+            else {
+                userAddress = "Lindstedtsvägen 5";
+                previousSearch = userAddress;
+            }
+        }
+        else {
+            previousSearch = userAddress;
         }
 
         distanceToWasteStationAddress = new HashMap<Float, String>();

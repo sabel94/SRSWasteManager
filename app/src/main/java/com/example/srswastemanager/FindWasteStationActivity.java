@@ -7,8 +7,10 @@ import android.graphics.Color;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -48,6 +50,7 @@ public class FindWasteStationActivity extends AppCompatActivity {
     ListView wasteStations;
     ArrayList<Spanned> listItems=new ArrayList<Spanned>();
     ArrayAdapter<Spanned> adapter;
+    String previousSearch = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,14 +152,41 @@ public class FindWasteStationActivity extends AppCompatActivity {
                 }
             }
         });
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (listItems.size() > 0) {
+                    listItems.clear();
+                    updateAdapter();
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     public void findWasteStations(String userAddress) {
         //Intent intent = new Intent(this, PayActivity.class);
         //startActivity(intent);
         //System.out.println(userAddress);
+        listItems.clear();
         if (userAddress.length() == 0) {
-            userAddress = "Lindstedtsvägen 5";
+            if (previousSearch != "") {
+                userAddress = previousSearch;
+            }
+            else {
+                userAddress = "Lindstedtsvägen 5";
+                previousSearch = userAddress;
+            }
+        }
+        else {
+            previousSearch = userAddress;
         }
 
         distanceToWasteStationAddress = new HashMap<Float, String>();
@@ -217,6 +247,10 @@ public class FindWasteStationActivity extends AppCompatActivity {
         item = item +"Household Waste\t\t\tPlastic Packaging\t\t\tNewspapers\n";
         item = item + statusCases.get(new Random().nextInt(statusCases.size()));
         listItems.add(Html.fromHtml(item));
+        adapter.notifyDataSetChanged();
+    }
+
+    void updateAdapter() {
         adapter.notifyDataSetChanged();
     }
 }

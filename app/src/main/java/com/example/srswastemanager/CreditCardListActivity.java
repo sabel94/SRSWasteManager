@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CreditCardListActivity extends AppCompatActivity {
 
@@ -30,7 +29,7 @@ public class CreditCardListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         List<CreditCard> cards = ((SrsApplication) getApplication()).getCards();
-        adapter = new CreditCardAdapter(cards.stream().map(CreditCard::getCardName).collect(Collectors.toList()));
+        adapter = new CreditCardAdapter(cards);
         recyclerView.setAdapter(adapter);
 
         newCard = findViewById(R.id.button17);

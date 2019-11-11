@@ -14,11 +14,13 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.opencsv.CSVReader;
 
@@ -50,7 +52,6 @@ public class FindWasteStationActivity extends AppCompatActivity {
     ListView wasteStations;
     ArrayList<Spanned> listItems=new ArrayList<Spanned>();
     ArrayAdapter<Spanned> adapter;
-    String previousSearch = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,9 @@ public class FindWasteStationActivity extends AppCompatActivity {
         //---------------------------------------
 
 
+
+
+
         String available = "<font color=\""+availableColor+"\">"+availableStatus+"</font>";
         String unavailable = "<font color=\""+unavailableColor+"\">"+unavailableStatus+"</font>";
         statusCases.add(available+tab2+available+tab2+available);
@@ -127,7 +131,7 @@ public class FindWasteStationActivity extends AppCompatActivity {
                     ArrayList<Float> coordinates = new ArrayList<Float>();
                     coordinates.add(Float.parseFloat(line[1]));
                     coordinates.add(Float.parseFloat(line[0]));
-                    addressToCoordinates.put(address, coordinates);
+                    addressToCoordinates.put(address.toLowerCase(), coordinates);
                 }
                 counter++;
             }
@@ -142,52 +146,68 @@ public class FindWasteStationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    editText.clearFocus();
+                    if (editText.hasFocus()) {
+                        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        editText.clearFocus();
+                    }
                     findWasteStations(editText.getText().toString());
                 }
-                catch (Exception e) {
-                    findWasteStations("");
-                }
+                catch (Exception e) {}
             }
         });
+
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (editText.getText().toString().length() == 0 || addressToCoordinates.containsKey(editText.getText().toString().toLowerCase())) {
+                    findWasteStationButton.setBackgroundColor(Color.parseColor("#4489ff"));
+                }
+                else {
+                    findWasteStationButton.setBackgroundColor(Color.parseColor("#7f7f7f"));
+                }
                 if (listItems.size() > 0) {
                     listItems.clear();
                     updateAdapter();
                 }
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
+
+        /*
+        editText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                //editText.clearFocus();
+            }
+        });
+        */
+
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    //editText.getText().clear();
+                    editText.setText("");
+                }
+            }
+        });
+
     }
 
     public void findWasteStations(String userAddress) {
-        //Intent intent = new Intent(this, PayActivity.class);
-        //startActivity(intent);
-        //System.out.println(userAddress);
         listItems.clear();
-        if (userAddress.length() == 0) {
-            if (previousSearch != "") {
-                userAddress = previousSearch;
-            }
-            else {
-                userAddress = "Lindstedtsvägen 5";
-                previousSearch = userAddress;
-            }
+        if (userAddress.equals("")) {
+            userAddress = "lindstedtsvägen 5";
         }
-        else {
-            previousSearch = userAddress;
-        }
+        userAddress = userAddress.toLowerCase();
 
         distanceToWasteStationAddress = new HashMap<Float, String>();
         Location userLocation = new Location("");

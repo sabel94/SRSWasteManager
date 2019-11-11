@@ -48,6 +48,7 @@ public class FindWasteStationActivity extends AppCompatActivity {
     AutoCompleteTextView editText;
     Button findWasteStationButton;
     HashMap<String, ArrayList<Float>> wasteStationAddressToCoordinates;
+    HashMap<String, Integer> wasteStationAddressToStatus;
     HashMap<Float, String> distanceToWasteStationAddress;
     ListView wasteStations;
     ArrayList<Spanned> listItems=new ArrayList<Spanned>();
@@ -65,35 +66,42 @@ public class FindWasteStationActivity extends AppCompatActivity {
 
         //-----------Data Reading---------------
         wasteStationAddressToCoordinates = new HashMap<String, ArrayList<Float>>();
+        wasteStationAddressToStatus = new HashMap<String, Integer>();
         ArrayList<Float> wasteStationcoordinates = new ArrayList<Float>();
         wasteStationcoordinates.add(59.359565f);
         wasteStationcoordinates.add(18.092085f);
         wasteStationAddressToCoordinates.put("Drevergatan 3", wasteStationcoordinates);
+        wasteStationAddressToStatus.put("Drevergatan 3", 3);
 
         wasteStationcoordinates = new ArrayList<Float>();
         wasteStationcoordinates.add(59.353273f);
         wasteStationcoordinates.add(18.088877f);
         wasteStationAddressToCoordinates.put("Lövängsgatan 2", wasteStationcoordinates);
+        wasteStationAddressToStatus.put("Lövängsgatan 2", 5);
 
         wasteStationcoordinates = new ArrayList<Float>();
         wasteStationcoordinates.add(59.358065f);
         wasteStationcoordinates.add(18.087720f);
         wasteStationAddressToCoordinates.put("Taxgatan 4", wasteStationcoordinates);
+        wasteStationAddressToStatus.put("Taxgatan 4", 2);
 
         wasteStationcoordinates = new ArrayList<Float>();
         wasteStationcoordinates.add(59.353476f);
         wasteStationcoordinates.add(18.094982f);
         wasteStationAddressToCoordinates.put("Untravägen 13", wasteStationcoordinates);
+        wasteStationAddressToStatus.put("Untravägen 13", 1);
 
         wasteStationcoordinates = new ArrayList<Float>();
         wasteStationcoordinates.add(59.355735f);
         wasteStationcoordinates.add(18.099167f);
         wasteStationAddressToCoordinates.put("Artemisgatan 21", wasteStationcoordinates);
+        wasteStationAddressToStatus.put("Artemisgatan 21", 0);
 
         wasteStationcoordinates = new ArrayList<Float>();
         wasteStationcoordinates.add(59.354299f);
         wasteStationcoordinates.add(18.099407f);
         wasteStationAddressToCoordinates.put("Skogvaktargatan 14", wasteStationcoordinates);
+        wasteStationAddressToStatus.put("Skogvaktargatan 14", 7);
         //---------------------------------------
 
 
@@ -265,7 +273,8 @@ public class FindWasteStationActivity extends AppCompatActivity {
         }
         String item= "<b>"+address+"<br>"+distanceStr+" m</b><br><br>";
         item = item +"Household Waste\t\t\tPlastic Packaging\t\t\tNewspapers\n";
-        item = item + statusCases.get(new Random().nextInt(statusCases.size()));
+        //item = item + statusCases.get(new Random().nextInt(statusCases.size()));
+        item = item + statusCases.get(wasteStationAddressToStatus.get(address));
         listItems.add(Html.fromHtml(item));
         adapter.notifyDataSetChanged();
     }

@@ -78,6 +78,7 @@ tools:context=".NewsletterActivity">
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/outline_sms_24"
+            android:tint="#4489ff"
             />
         <ImageView
             android:id="@+id/imageView2"
@@ -127,6 +128,7 @@ tools:context=".NewsletterActivity">
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/outline_sms_24"
+            android:tint="#7f7f7f"
             />
         <ImageView
             android:id="@+id/imageView3"
@@ -176,6 +178,7 @@ tools:context=".NewsletterActivity">
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/outline_sms_24"
+            android:tint="#7f7f7f"
             />
         <ImageView
             android:id="@+id/imageView4"

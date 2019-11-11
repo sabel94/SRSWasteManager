@@ -1,5 +1,7 @@
 package com.example.srswastemanager;
 
+import android.graphics.Color;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -34,6 +36,8 @@ public class NewsletterActivity extends AppCompatActivity {
         faq1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ImageView newsletterIcon1 = (ImageView) findViewById(R.id.imageView11);
+                newsletterIcon1.setColorFilter(Color.parseColor("#7f7f7f"));
                 if (answer1.getVisibility() == View.GONE) {
                     answer1.setVisibility(View.VISIBLE);
                     arrow1.setBackgroundResource(0);
@@ -56,6 +60,8 @@ public class NewsletterActivity extends AppCompatActivity {
         faq2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ImageView newsletterIcon2 = (ImageView) findViewById(R.id.imageView12);
+                newsletterIcon2.setColorFilter(Color.parseColor("#7f7f7f"));
                 if (answer2.getVisibility() == View.GONE) {
                     answer2.setVisibility(View.VISIBLE);
                     arrow2.setBackgroundResource(0);
@@ -78,6 +84,8 @@ public class NewsletterActivity extends AppCompatActivity {
         faq3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ImageView newsletterIcon3 = (ImageView) findViewById(R.id.imageView13);
+                newsletterIcon3.setColorFilter(Color.parseColor("#7f7f7f"));
                 if (answer3.getVisibility() == View.GONE) {
                     answer3.setVisibility(View.VISIBLE);
                     arrow3.setBackgroundResource(0);
@@ -100,6 +108,8 @@ public class NewsletterActivity extends AppCompatActivity {
         faq4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ImageView newsletterIcon4 = (ImageView) findViewById(R.id.imageView14);
+                newsletterIcon4.setColorFilter(Color.parseColor("#7f7f7f"));
                 if (answer4.getVisibility() == View.GONE) {
                     answer4.setVisibility(View.VISIBLE);
                     arrow4.setBackgroundResource(0);

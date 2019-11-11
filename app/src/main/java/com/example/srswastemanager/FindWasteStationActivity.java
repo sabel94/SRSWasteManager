@@ -161,10 +161,10 @@ public class FindWasteStationActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (editText.getText().toString().length() == 0 || addressToCoordinates.containsKey(editText.getText().toString().toLowerCase())) {
-                    findWasteStationButton.setBackgroundColor(Color.parseColor("#4489ff"));
+                    findWasteStationButton.setBackgroundResource(R.drawable.btn_rounded);
                 }
                 else {
-                    findWasteStationButton.setBackgroundColor(Color.parseColor("#7f7f7f"));
+                    findWasteStationButton.setBackgroundResource(R.drawable.btn_rounded3);
                 }
                 if (listItems.size() > 0) {
                     listItems.clear();

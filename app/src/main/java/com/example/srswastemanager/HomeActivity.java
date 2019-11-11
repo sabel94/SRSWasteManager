@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         ArrayList<Float> wastes = new ArrayList<Float>();
         wastes.add(60f);    //Household Waste.
         wastes.add(6f);     //Plastic Packaging.
-        wastes.add(13f);     //Newspapers.
+        wastes.add(13f);    //Newspapers.
         //---------------------------------------
 
 

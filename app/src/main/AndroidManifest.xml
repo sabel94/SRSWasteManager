@@ -3,13 +3,16 @@
     package="com.example.srswastemanager">
 
     <application
+        android:name="com.example.srswastemanager.SrsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CityWasteFractionsActivity"></activity>
+        <activity android:name=".CreditCardListActivity"></activity>
+        <activity android:name=".AddCreditCardActivity" />
+        <activity android:name=".CityWasteFractionsActivity" />
         <activity android:name=".CityTotalWasteActivity" />
         <activity android:name=".UserCostActivity" />
         <activity android:name=".InformationActivity" />

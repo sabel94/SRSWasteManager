@@ -24,6 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton newsletterButton;
     ImageButton findWasteStationButton;
     ImageButton informationButton;
+    ImageButton creditCardButton;
     float householdWastePricePerKg = 1.37f;
     float plasticPackagingPricePerKg = 1.37f;
     float newsPapersPricePerKg = 1.37f;
@@ -93,6 +94,7 @@ public class HomeActivity extends AppCompatActivity {
         newsletterButton = (ImageButton) findViewById(R.id.imageButton);
         findWasteStationButton = (ImageButton) findViewById(R.id.imageButton2);
         informationButton = (ImageButton) findViewById(R.id.imageButton3);
+        creditCardButton = (ImageButton) findViewById(R.id.imageButton4);
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +125,12 @@ public class HomeActivity extends AppCompatActivity {
                 openInformationActivity();
             }
         });
+        creditCardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreditCardListActivity();
+            }
+        });
     }
 
     public void openPayActivity() {
@@ -147,6 +155,11 @@ public class HomeActivity extends AppCompatActivity {
 
     public void openInformationActivity() {
         Intent intent = new Intent(this, InformationActivity.class);
+        startActivity(intent);
+    }
+
+    public void openCreditCardListActivity() {
+        Intent intent = new Intent(this, CreditCardListActivity.class);
         startActivity(intent);
     }
 }

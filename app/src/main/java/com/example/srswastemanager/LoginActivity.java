@@ -124,9 +124,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void addPasswordChar(String digit){
+        if (password.length() == 6) return;
+
         eraseButton.setBackgroundColor(Color.parseColor("#006c81"));
         password = password + digit;
-        if (password.length() >= 6) {
+        if (password.length() == 6) {
             loginButton.setBackgroundColor(Color.parseColor("#006c81"));
         }
         textView.setText(password);
@@ -149,9 +151,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(){
-        if (password.length() >= 6) {
+        if (password.length() == 6) {
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra("userID", password);
+            // TODO: Read in all data of chosen user.
+            String threeFirst = password.substring(0, 3);
+            int userId = Integer.parseInt(threeFirst);
+            if (userId <= 100 && userId > 0) {
+                
+            }
             startActivity(intent);
         }
     }

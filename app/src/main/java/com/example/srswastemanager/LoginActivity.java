@@ -1,6 +1,7 @@
 package com.example.srswastemanager;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -124,9 +131,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void addPasswordChar(String digit){
+        if (password.length() == 6) return;
+
         eraseButton.setBackgroundColor(Color.parseColor("#006c81"));
         password = password + digit;
-        if (password.length() >= 6) {
+        if (password.length() == 6) {
             loginButton.setBackgroundColor(Color.parseColor("#006c81"));
         }
         textView.setText(password);
@@ -149,10 +158,34 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(){
-        if (password.length() >= 6) {
+        if (password.length() == 6) {
+            // TODO: Debug. Does not seem to get user number 1 if I type for example 001222, even though it should
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra("userID", password);
+            String threeFirst = password.substring(0, 3);
+            int userId = Integer.parseInt(threeFirst);
+            if (userId <= 100 && userId > 0) {
+                readIntoApplication(userId);
+            }
             startActivity(intent);
+        }
+    }
+
+    private void readIntoApplication(int userId) {
+        AssetManager am = getAssets();
+
+        try {
+            InputStream is = am.open("database.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            String json = new String(buffer);
+
+            JSONObject obj = new JSONObject(json);
+            ((SrsApplication) getApplication()).setUserData(obj);
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
         }
     }
 }

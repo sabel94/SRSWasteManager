@@ -3,8 +3,10 @@ package com.example.srswastemanager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -14,7 +16,7 @@ public class CreditCardListActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
-    RecyclerView.LayoutManager layoutManager;
+    LinearLayoutManager layoutManager;
     Button newCard;
 
     @Override
@@ -27,6 +29,10 @@ public class CreditCardListActivity extends AppCompatActivity {
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                layoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         List<CreditCard> cards = ((SrsApplication) getApplication()).getCards();
         adapter = new CreditCardAdapter(cards);
@@ -44,5 +50,17 @@ public class CreditCardListActivity extends AppCompatActivity {
     private void openAddCreditCardActivity() {
         Intent intent = new Intent(this, AddCreditCardActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+            return true;
+        }
+        return false;
     }
 }

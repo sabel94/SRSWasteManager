@@ -40,9 +40,9 @@ MEANS =  \
 }
 
 def get_random_stats_for_one_month(month):
-	household_sample = np.random.normal(MEANS[month]["householdWaste"], STD_DEVS["householdWaste"])
-	plastic_sample = np.random.normal(MEANS[month]["plasticPackaging"], STD_DEVS["plasticPackaging"])
-	newspapers_sample = np.random.normal(MEANS[month]["newspapers"], STD_DEVS["newspapers"])
+	household_sample = max(0, np.random.normal(MEANS[month]["householdWaste"], STD_DEVS["householdWaste"]))
+	plastic_sample = max(0, np.random.normal(MEANS[month]["plasticPackaging"], STD_DEVS["plasticPackaging"]))
+	newspapers_sample = max(0, np.random.normal(MEANS[month]["newspapers"], STD_DEVS["newspapers"]))
 
 	return {"householdWaste": household_sample,
 			"plasticPackaging": plastic_sample,

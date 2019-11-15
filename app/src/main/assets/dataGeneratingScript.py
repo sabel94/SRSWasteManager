@@ -2,7 +2,7 @@ import json
 import numpy as np
 
 NO_OF_USERS = 100 # Number of users to create
-YEARS = ["2018", "2019"]
+YEARS = ["2019"]
 DAYS_IN_MONTH = {"january": 31, "february": 28, "march": 31, "april": 30, "may": 31, "june": 30, "july": 31, "august": 31, "september": 30, "october": 31, "november": 30, "december": 31}
 STD_DEVS = {"householdWaste": 1, "plasticPackaging": 0.1, "newspapers": 0.15}
 MONTH_NUMBERS = {"january": 1, "february": 2, "march": 3, "april": 4, "may": 5, "june": 6, "july": 7, "august": 8, "september": 9, "october": 10, "november": 11, "december": 12}
@@ -48,7 +48,6 @@ def get_random_stats_for_one_month(month):
 			"plasticPackaging": plastic_sample,
 			"newspapers": newspapers_sample}
 
-json_object = {}
 
 
 def generate_user_waste_stats(id):
@@ -58,6 +57,7 @@ def generate_user_waste_stats(id):
 	last_name = LAST_NAMES[last_name_idx]
 	return {
 		"name": first_name + " " + last_name,
+		"id": id,
 		"wasteStats": {
 			year: {
 				month: get_random_stats_for_one_month(month) for month in DAYS_IN_MONTH.keys()
@@ -69,20 +69,36 @@ def generate_user_waste_stats(id):
 def generate_user_payments(user_waste_stats):
 	payments = {}
 	for year, year_stats in user_waste_stats["wasteStats"].items():
+		payments[year] = {}
 		for month, month_stats in year_stats.items():
+			if MONTH_NUMBERS[month] > 10:
+				continue
 			waste_amount_month = 0
 			for _, waste_kgs in month_stats.items():
 				waste_amount_month += waste_kgs
 			price_month = waste_amount_month * PRICES["householdWastePerKilo"]
-			payments[year] = {month: {"total_amount": price_month, "payment_date": "{}-{}-{}".format(year, MONTH_NUMBERS[month], DAYS_IN_MONTH[month])}}
+			# TODO: Implement with date instead
+			payment_month = MONTH_NUMBERS[month] + 1
+			payment_month_formatted = str(payment_month) if payment_month > 9 else "0" + str(payment_month)
+			payments[year][month] = {"total_amount": price_month, "payment_date": "{}-{}-{}".format(year, payment_month_formatted, DAYS_IN_MONTH[month])}
 	return payments
+
+json_object = {}
 
 for id in range(NO_OF_USERS):
 	user_waste_stats = generate_user_waste_stats(id)
 	json_object[id] = user_waste_stats
 	json_object[id]["payments"] = generate_user_payments(user_waste_stats)
 
-
+for key, user_object in json_object.items():
+	for key, value in user_object.items():
+		if key == "wasteStats":
+			for year, year_object in value.items():
+				if year == "2019":
+					for month, month_object in year_object.items():
+						if month == "december":
+							for wasteType, amount in month_object.items():
+								month_object[wasteType] = amount / 3
 
 f = open("database.json", "w")
 f.write(json.dumps(json_object, indent=4))

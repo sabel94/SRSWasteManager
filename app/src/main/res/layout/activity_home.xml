@@ -8,7 +8,7 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
-    tools:context=".MainActivity">
+    tools:context=".BankIdActivity">
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -26,8 +26,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/textView2"
         android:textColor="#000000"
-        android:textSize="16dp"
-        android:text="October 2019" />
+        android:textSize="16dp" />
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/piechart"
         android:layout_width="325dp"

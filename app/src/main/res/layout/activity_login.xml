@@ -8,7 +8,7 @@
     android:paddingRight="0dp"
     android:paddingTop="16dp"
     android:paddingBottom="0dp"
-    tools:context=".MainActivity">
+    tools:context=".BankIdActivity">
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -39,8 +39,7 @@
         android:paddingLeft="18dp"
         android:layout_toRightOf="@+id/imageView"
         android:textColor="#000000"
-        android:textSize="16dp"
-        android:text="KARL-EINAR ANDERSSON" />
+        android:textSize="16dp" />
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"

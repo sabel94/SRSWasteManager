@@ -14,7 +14,13 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -25,9 +31,12 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton findWasteStationButton;
     ImageButton informationButton;
     ImageButton creditCardButton;
+    TextView month;
     float householdWastePricePerKg = 1.37f;
     float plasticPackagingPricePerKg = 1.37f;
     float newsPapersPricePerKg = 1.37f;
+
+    static String[] months = {"january", "february", "march", "april", "may", "june", "juli", "august", "september", "october", "november", "december"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,25 +48,33 @@ public class HomeActivity extends AppCompatActivity {
             userID = extras.getString("userID");
         }
 
-
-
-
-
         //-----------Data Reading---------------
         float totalWasteWeight = 0f;
         ArrayList<Float> wastes = new ArrayList<Float>();
-        wastes.add(60f);    //Household Waste.
-        wastes.add(6f);     //Plastic Packaging.
-        wastes.add(13f);    //Newspapers.
+        Calendar instance = Calendar.getInstance();
+        int currentMonth = instance.get(Calendar.MONTH);
+        JSONObject monthData;
+        try {
+            monthData = ((SrsApplication) getApplication()).getActiveUserData()
+                    .getJSONObject("wasteStats")
+                    .getJSONObject("2019")
+                    .getJSONObject(months[currentMonth]);
+            wastes.add((float) monthData.getDouble("householdWaste"));    //Household Waste.
+            wastes.add((float) monthData.getDouble("plasticPackaging"));     //Plastic Packaging.
+            wastes.add((float) monthData.getDouble("newspapers"));    //Newspapers.
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
         //---------------------------------------
 
-
-
-
+        month = (TextView) findViewById(R.id.textView2);
+        month.setText(String.format("%s %s", StringUtils.capitalize(months[currentMonth]), instance.get(Calendar.YEAR)));
 
         float amountDue = wastes.get(0) * householdWastePricePerKg + wastes.get(1) * plasticPackagingPricePerKg + wastes.get(2) * newsPapersPricePerKg;
         TextView amountDuetextField = (TextView) findViewById(R.id.textView5);
-        amountDuetextField.setText(String.format("%.2f", amountDue) + " SEK");
+        amountDuetextField.setText(String.format(Locale.getDefault(), "%.2f SEK", amountDue));
         PieChart pieChart = findViewById(R.id.piechart);
         ArrayList NoOfEmp = new ArrayList();
         int i = 0;
@@ -74,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
         PieData data = new PieData(wasteType, dataSet);
         pieChart.setData(data);
         //pieChart.setDrawHoleEnabled(false);
-        pieChart.setCenterText("Total\n"+totalWasteWeight+" kg");
+        pieChart.setCenterText(String.format(Locale.getDefault(), "Total\n %.1f kg", totalWasteWeight));
         pieChart.setCenterTextSize(16f);
         pieChart.setTransparentCircleRadius(28f);
         pieChart.setDescription("");

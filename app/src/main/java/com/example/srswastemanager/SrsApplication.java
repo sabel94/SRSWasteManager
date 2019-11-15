@@ -9,10 +9,18 @@ import java.util.List;
 
 public class SrsApplication extends Application {
 
+    static SrsApplication application;
     List<CreditCard> cards = new ArrayList<>();
-    JSONObject userData;
+    JSONObject activeUserData;
 
 
+    public SrsApplication() {
+        this.application = this;
+    }
+
+    public static SrsApplication getApplication() {
+        return application;
+    }
 
     public List<CreditCard> getCards() {
         return cards;
@@ -22,11 +30,11 @@ public class SrsApplication extends Application {
         this.cards = cards;
     }
 
-    public JSONObject getUserData() {
-        return userData;
+    public JSONObject getActiveUserData() {
+        return activeUserData;
     }
 
-    public void setUserData(JSONObject userData) {
-        this.userData = userData;
+    public void setActiveUserData(JSONObject userData) {
+        this.activeUserData = userData;
     }
 }

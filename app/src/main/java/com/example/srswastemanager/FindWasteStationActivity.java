@@ -190,7 +190,7 @@ public class FindWasteStationActivity extends AppCompatActivity {
         /*
         editText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long userId) {
                 InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 //editText.clearFocus();

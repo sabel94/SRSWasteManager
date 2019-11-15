@@ -7,7 +7,7 @@
     android:paddingRight="0dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
-    tools:context=".MainActivity">
+    tools:context=".BankIdActivity">
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"
         android:layout_width="360dp"

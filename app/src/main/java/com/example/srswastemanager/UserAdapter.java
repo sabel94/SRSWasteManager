@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Map;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     private List<User> users;
@@ -51,11 +52,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             @Override
             public void onClick(View v) {
                 String userId = users.get(holder.getAdapterPosition()).getUserId();
-                // TODO: Read user data to application
                 JSONObject userData;
                 try {
                     userData = SelectUserActivity.getAllUserData().getJSONObject(userId);
                     SrsApplication.getApplication().setActiveUserData(userData);
+                    Map<String, List<Float>> averages = SelectUserActivity.readAverages();
+                    SrsApplication.getApplication().setAverageWasteAmounts(averages);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     System.exit(1);

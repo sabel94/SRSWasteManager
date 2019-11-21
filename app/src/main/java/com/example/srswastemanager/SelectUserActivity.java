@@ -13,8 +13,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class SelectUserActivity extends AppCompatActivity {
 
@@ -47,9 +49,6 @@ public class SelectUserActivity extends AppCompatActivity {
         adapter = new UserAdapter(users);
 
         recyclerView.setAdapter(adapter);
-
-        // TODO: Make each user clickable (clicking should trigger that user's data being read into the application)
-
     }
 
     private List<User> readUsersFromFile() {
@@ -81,5 +80,37 @@ public class SelectUserActivity extends AppCompatActivity {
         }
 
         return users;
+    }
+
+    static Map<String, List<Float>> readAverages() {
+        AssetManager am = SrsApplication.getContext().getAssets();
+        try {
+            InputStream is = am.open("averages.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            String json = new String(buffer);
+
+            JSONObject obj = new JSONObject(json);
+            return parseToAverages(obj);
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
+    }
+
+    private static Map<String, List<Float>> parseToAverages(JSONObject json) throws JSONException {
+        Map<String, List<Float>> averages = new HashMap<>();
+        Iterator<String> keys = json.keys();
+        while (keys.hasNext()) {
+            String year = keys.next();
+            List<Float> yearAverages = new ArrayList<>();
+            for (int i = 0; i < 12; i++) {
+                float average = (float) json.getJSONArray(year).getDouble(i);
+                yearAverages.add(average);
+            }
+            averages.put(year, yearAverages);
+        }
+        return averages;
     }
 }

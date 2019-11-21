@@ -15,10 +15,12 @@ import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
 
+import static com.example.srswastemanager.UserCostActivity.getXAxisValues;
+
 public class CityWasteFractionsActivity extends AppCompatActivity {
 
     private ImageButton buttonLeft;
-    private ImageButton buttonRight;
+    private ImageButton buttonRight; // Make statistics integers
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,8 @@ public class CityWasteFractionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_city_waste_fractions);
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        BarData data = new BarData(getXAxisValues(), getDataSet());
+        BarData data = new BarData(getXAxisValues(0), getDataSet());
+        data.setValueFormatter(new IntValueFormatter());
         data.setValueTextSize(11f);
         chart.setData(data);
         chart.setDescription("");
@@ -121,17 +124,6 @@ public class CityWasteFractionsActivity extends AppCompatActivity {
         dataSets.add(barDataSet2);
         dataSets.add(barDataSet3);
         return dataSets;
-    }
-
-    private ArrayList<String> getXAxisValues() {
-        ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("MAR");
-        xAxis.add("APR");
-        xAxis.add("MAY");
-        xAxis.add("JUN");
-        xAxis.add("JUL");
-        xAxis.add("AUG");
-        return xAxis;
     }
 
     @Override

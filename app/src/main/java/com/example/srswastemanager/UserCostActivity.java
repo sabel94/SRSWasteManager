@@ -12,13 +12,30 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.DefaultValueFormatter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static com.example.srswastemanager.SrsApplication.getCurrentMonth;
+import static com.example.srswastemanager.SrsApplication.getCurrentYear;
 
 public class UserCostActivity extends AppCompatActivity {
 
     private ImageButton buttonLeft;
     private ImageButton buttonRight;
+    static final int NUMBER_OF_MONTHS = 6;
+
+    static final String[] months = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +44,8 @@ public class UserCostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_cost);
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        BarData data = new BarData(getXAxisValues(), getDataSet());
+        BarData data = new BarData(getXAxisValues(0), getDataSet());
+        data.setValueFormatter(new SekValueFormatter());
         data.setValueTextSize(11f);
         chart.setData(data);
         chart.setDescription("");
@@ -69,34 +87,49 @@ public class UserCostActivity extends AppCompatActivity {
 
     private ArrayList<BarDataSet> getDataSet() {
         ArrayList<BarDataSet> dataSets = null;
-        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
-        BarEntry v1e1 = new BarEntry(93.16f, 0); // Jan
-        valueSet1.add(v1e1);
-        BarEntry v1e2 = new BarEntry(65.76f, 1); // Feb
-        valueSet1.add(v1e2);
-        BarEntry v1e3 = new BarEntry(127.41f, 2); // Mar
-        valueSet1.add(v1e3);
-        BarEntry v1e4 = new BarEntry(154.81f, 3); // Apr
-        valueSet1.add(v1e4);
-        BarEntry v1e5 = new BarEntry(84.94f, 4); // May
-        valueSet1.add(v1e5);
-        BarEntry v1e6 = new BarEntry(108.23f, 5); // Jun
-        valueSet1.add(v1e6);
-        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Your Waste Cost");
-        barDataSet1.setColor(Color.parseColor("#FDCA40"));
+        List<BarEntry> valueSet = null;
+        valueSet = getBarEntries();
+        BarDataSet barDataSet = new BarDataSet(valueSet, "Your Waste Cost");
+        barDataSet.setColor(Color.parseColor("#FDCA40"));
         dataSets = new ArrayList<>();
-        dataSets.add(barDataSet1);
+        dataSets.add(barDataSet);
         return dataSets;
     }
 
-    private ArrayList<String> getXAxisValues() {
+    private List<BarEntry> getBarEntries() {
+        List<JSONObject> paymentsToShow = getPaymentsInYearUpTo(getCurrentYear(), getCurrentMonth() - 1, NUMBER_OF_MONTHS);
+        if (paymentsToShow.size() < NUMBER_OF_MONTHS) {
+            paymentsToShow.addAll(getPaymentsInYearUpTo(getCurrentYear() - 1, 11, 5 - paymentsToShow.size()));
+        }
+
+        return IntStream.range(0, NUMBER_OF_MONTHS).mapToObj(i -> {
+            try {
+                return new BarEntry((float) paymentsToShow.get(i).getDouble("total_amount"), i);
+            } catch (JSONException e) {
+                return new BarEntry(0f, i);
+            }
+        }).collect(Collectors.toList());
+    }
+
+    private List<JSONObject> getPaymentsInYearUpTo(int year, int month, int numberOfMonths) {
+        List<JSONObject> payments = new ArrayList<>();
+        try {
+            JSONArray paymentsInYear = ((SrsApplication) getApplication()).getActiveUserData().getJSONObject("payments").getJSONArray(Integer.toString(year));
+            for (int i = month - numberOfMonths + 1; i <= month; i++) {
+                payments.add(paymentsInYear.getJSONObject(i));
+            }
+            return payments;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    static ArrayList<String> getXAxisValues(int offset) {
         ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("MAY");
-        xAxis.add("JUN");
-        xAxis.add("JUL");
-        xAxis.add("AUG");
-        xAxis.add("SEP");
-        xAxis.add("OCT");
+        IntStream.range(0, NUMBER_OF_MONTHS).forEach(i -> {
+            xAxis.add(months[getCurrentMonth() - (NUMBER_OF_MONTHS - i + offset)]);
+        });
         return xAxis;
     }
 

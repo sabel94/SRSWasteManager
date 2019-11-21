@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static com.example.srswastemanager.SrsApplication.getCurrentMonth;
+import static com.example.srswastemanager.SrsApplication.getCurrentYear;
+
 public class HomeActivity extends AppCompatActivity {
 
     String userID;
@@ -35,8 +38,6 @@ public class HomeActivity extends AppCompatActivity {
     float householdWastePricePerKg = 1.37f;
     float plasticPackagingPricePerKg = 1.37f;
     float newsPapersPricePerKg = 1.37f;
-
-    static String[] months = {"january", "february", "march", "april", "may", "june", "juli", "august", "september", "october", "november", "december"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +58,8 @@ public class HomeActivity extends AppCompatActivity {
         try {
             monthData = ((SrsApplication) getApplication()).getActiveUserData()
                     .getJSONObject("wasteStats")
-                    .getJSONObject("2019")
-                    .getJSONObject(months[currentMonth]);
+                    .getJSONArray(Integer.toString(getCurrentYear()))
+                    .getJSONObject(getCurrentMonth());
             wastes.add((float) monthData.getDouble("householdWaste"));    //Household Waste.
             wastes.add((float) monthData.getDouble("plasticPackaging"));     //Plastic Packaging.
             wastes.add((float) monthData.getDouble("newspapers"));    //Newspapers.
@@ -70,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         //---------------------------------------
 
         month = (TextView) findViewById(R.id.textView2);
-        month.setText(String.format("%s %s", StringUtils.capitalize(months[currentMonth]), instance.get(Calendar.YEAR)));
+        month.setText(String.format("%s %s", StringUtils.capitalize(SrsApplication.months[currentMonth]), instance.get(Calendar.YEAR)));
 
         float amountDue = wastes.get(0) * householdWastePricePerKg + wastes.get(1) * plasticPackagingPricePerKg + wastes.get(2) * newsPapersPricePerKg;
         TextView amountDuetextField = (TextView) findViewById(R.id.textView5);
@@ -84,6 +85,7 @@ public class HomeActivity extends AppCompatActivity {
             i++;
         }
         PieDataSet dataSet = new PieDataSet(NoOfEmp, "");
+        dataSet.setValueFormatter(new IntValueFormatter());
         ArrayList wasteType = new ArrayList();
         wasteType.add("Household\nWaste");
         wasteType.add("Plastic\nPackaging");
@@ -91,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
         PieData data = new PieData(wasteType, dataSet);
         pieChart.setData(data);
         //pieChart.setDrawHoleEnabled(false);
-        pieChart.setCenterText(String.format(Locale.getDefault(), "Total\n %.1f kg", totalWasteWeight));
+        pieChart.setCenterText(String.format(Locale.getDefault(), "Total\n %d kg", IntValueFormatter.roundToInt(totalWasteWeight)));
         pieChart.setCenterTextSize(16f);
         pieChart.setTransparentCircleRadius(28f);
         pieChart.setDescription("");

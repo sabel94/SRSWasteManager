@@ -18,6 +18,7 @@ import java.io.InputStream;
 
 public class LoginActivity extends AppCompatActivity {
 
+    TextView name;
     Button loginButton;
     Button eraseButton;
     Button button0;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        name = (TextView) findViewById(R.id.textView2);
         loginButton = (Button) findViewById(R.id.button3);
         eraseButton = (Button) findViewById(R.id.button);
         button0 = (Button) findViewById(R.id.button2);
@@ -53,6 +55,14 @@ public class LoginActivity extends AppCompatActivity {
         button9 = (Button) findViewById(R.id.button6);
         textView = (EditText)findViewById(R.id.editText);
         password = "";
+
+        String userName = null;
+        try {
+            userName = ((SrsApplication) getApplication()).getActiveUserData().getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        name.setText(userName);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
             String json = new String(buffer);
 
             JSONObject obj = new JSONObject(json);
-            ((SrsApplication) getApplication()).setUserData(obj);
+//            ((SrsApplication) getApplication()).setActiveUserData(obj);
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();

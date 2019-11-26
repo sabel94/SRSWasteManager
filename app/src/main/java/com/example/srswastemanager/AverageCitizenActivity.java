@@ -13,11 +13,25 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static com.example.srswastemanager.SrsApplication.getCurrentMonth;
+import static com.example.srswastemanager.SrsApplication.getCurrentYear;
+import static com.example.srswastemanager.UserCostActivity.NUMBER_OF_MONTHS;
+import static com.example.srswastemanager.UserCostActivity.getXAxisValues;
+
 
 public class AverageCitizenActivity extends AppCompatActivity {
 
-    private ImageButton buttonLeft;
+    private ImageButton buttonLeft;  // TODO: remove decimals and make rolling for current month
     private ImageButton buttonRight;
 
     @Override
@@ -27,7 +41,8 @@ public class AverageCitizenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_average_citizen);
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        BarData data = new BarData(getXAxisValues(), getDataSet());
+        BarData data = new BarData(getXAxisValues(-1), getDataSet());
+        data.setValueFormatter(new IntValueFormatter());
         data.setValueTextSize(11f);
         chart.setData(data);
         chart.setDescription("");
@@ -67,37 +82,13 @@ public class AverageCitizenActivity extends AppCompatActivity {
     }
 
     private ArrayList<BarDataSet> getDataSet() {
-        ArrayList<BarDataSet> dataSets = null;
-        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
-        BarEntry v1e1 = new BarEntry(68.000f, 0); // Jan
-        valueSet1.add(v1e1);
-        BarEntry v1e2 = new BarEntry(48.000f, 1); // Feb
-        valueSet1.add(v1e2);
-        BarEntry v1e3 = new BarEntry(93.000f, 2); // Mar
-        valueSet1.add(v1e3);
-        BarEntry v1e4 = new BarEntry(113.000f, 3); // Apr
-        valueSet1.add(v1e4);
-        BarEntry v1e5 = new BarEntry(62.000f, 4); // May
-        valueSet1.add(v1e5);
-        BarEntry v1e6 = new BarEntry(79.000f, 5); // Jun
-        valueSet1.add(v1e6);
-        ArrayList<BarEntry> valueSet2 = new ArrayList<>();
-        BarEntry v2e1 = new BarEntry(80.000f, 0); // Jan
-        valueSet2.add(v2e1);
-        BarEntry v2e2 = new BarEntry(73.000f, 1); // Feb
-        valueSet2.add(v2e2);
-        BarEntry v2e3 = new BarEntry(65.000f, 2); // Mar
-        valueSet2.add(v2e3);
-        BarEntry v2e4 = new BarEntry(65.000f, 3); // Apr
-        valueSet2.add(v2e4);
-        BarEntry v2e5 = new BarEntry(82.000f, 4); // May
-        valueSet2.add(v2e5);
-        BarEntry v2e6 = new BarEntry(86.000f, 5); // Jun
-        valueSet2.add(v2e6);
-        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "You");
+        ArrayList<BarDataSet> dataSets;
+        List<BarEntry> userWaste = wasteMonthsToBarEntries(getLatestUserWasteMonths());
+        List<BarEntry> averageWaste
+                = wasteAveragesToBarEntries(SrsApplication.getApplication().getAverageWasteAmounts());
+        BarDataSet barDataSet1 = new BarDataSet(userWaste, "You");
         barDataSet1.setColor(Color.rgb(68, 138, 255));
-        BarDataSet barDataSet2 = new BarDataSet(valueSet2, "Average Household");
-        //barDataSet2.setColors(ColorTemplate.COLORFUL_COLORS);
+        BarDataSet barDataSet2 = new BarDataSet(averageWaste, "Average Household");
         barDataSet2.setColor(Color.rgb(233, 30, 99));
         dataSets = new ArrayList<>();
         dataSets.add(barDataSet1);
@@ -105,15 +96,58 @@ public class AverageCitizenActivity extends AppCompatActivity {
         return dataSets;
     }
 
-    private ArrayList<String> getXAxisValues() {
-        ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("MAY");
-        xAxis.add("JUN");
-        xAxis.add("JUL");
-        xAxis.add("AUG");
-        xAxis.add("SEP");
-        xAxis.add("OCT");
-        return xAxis;
+    private List<BarEntry> wasteAveragesToBarEntries(Map<String, List<Float>> averageWasteAmounts) {
+        String year = Integer.toString(getCurrentYear());
+        List<Float> currentYearAverages = averageWasteAmounts.get(year);
+        List<Float> averages;
+        if (currentYearAverages.size() < NUMBER_OF_MONTHS) {
+             averages = averageWasteAmounts
+                    .get(Integer.toString(getCurrentYear() - 1))
+                    .subList(12 - (NUMBER_OF_MONTHS - currentYearAverages.size()), 12);
+             averages.addAll(currentYearAverages);
+        } else {
+            averages = currentYearAverages.subList(getCurrentMonth() - (NUMBER_OF_MONTHS), getCurrentMonth());
+        }
+        return IntStream
+                .range(0, NUMBER_OF_MONTHS)
+                .mapToObj(i -> new BarEntry(averages.get(i), i))
+                .collect(Collectors.toList());
+    }
+
+    private List<BarEntry> wasteMonthsToBarEntries(List<JSONObject> wasteMonths) {
+        return IntStream.range(0, NUMBER_OF_MONTHS).mapToObj(i -> {
+            try {
+                return new BarEntry(calculateSumOfFractions(wasteMonths.get(i)), i);
+            } catch (JSONException e) {
+                return new BarEntry(0f, i);
+            }
+        }).collect(Collectors.toList());
+    }
+
+    private float calculateSumOfFractions(JSONObject wasteMonth) throws JSONException {
+        return (float) (wasteMonth.getDouble("householdWaste") + wasteMonth.getDouble("plasticPackaging") + wasteMonth.getDouble("newspapers"));
+    }
+
+    private List<JSONObject> getLatestUserWasteMonths() {
+        List<JSONObject> latestUserWasteMonths = getUserWastePerMonthUpTo(getCurrentYear(), getCurrentMonth(), UserCostActivity.NUMBER_OF_MONTHS);
+        if (latestUserWasteMonths.size() < UserCostActivity.NUMBER_OF_MONTHS) {
+            latestUserWasteMonths.addAll(getUserWastePerMonthUpTo(getCurrentYear() - 1, 11, 5 - latestUserWasteMonths.size()));
+        }
+        return latestUserWasteMonths;
+    }
+
+    private List<JSONObject> getUserWastePerMonthUpTo(int year, int month, int numberOfMonths) {
+        List<JSONObject> wasteMonths = new ArrayList<>();
+        try {
+            JSONArray wasteStatsInYear = ((SrsApplication) getApplication()).getActiveUserData().getJSONObject("wasteStats").getJSONArray(Integer.toString(year));
+            for (int i = month - numberOfMonths + 1; i <= month; i++) {
+                wasteMonths.add(wasteStatsInYear.getJSONObject(i));
+            }
+            return wasteMonths;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     @Override

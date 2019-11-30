@@ -33,6 +33,7 @@ public class AverageCitizenActivity extends AppCompatActivity {
 
     private ImageButton buttonLeft;  // TODO: remove decimals and make rolling for current month
     private ImageButton buttonRight;
+    int offset = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class AverageCitizenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_average_citizen);
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        BarData data = new BarData(getXAxisValues(-1), getDataSet());
+        BarData data = new BarData(getXAxisValues(offset), getDataSet());
         data.setValueFormatter(new IntValueFormatter());
         data.setValueTextSize(11f);
         chart.setData(data);
@@ -106,7 +107,7 @@ public class AverageCitizenActivity extends AppCompatActivity {
                     .subList(12 - (NUMBER_OF_MONTHS - currentYearAverages.size()), 12);
              averages.addAll(currentYearAverages);
         } else {
-            averages = currentYearAverages.subList(getCurrentMonth() - (NUMBER_OF_MONTHS), getCurrentMonth());
+            averages = currentYearAverages.subList(getCurrentMonth() - (NUMBER_OF_MONTHS) - offset, getCurrentMonth() - offset);
         }
         return IntStream
                 .range(0, NUMBER_OF_MONTHS)

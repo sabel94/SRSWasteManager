@@ -35,9 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton informationButton;
     ImageButton creditCardButton;
     TextView month;
-    float householdWastePricePerKg = 1.37f;
-    float plasticPackagingPricePerKg = 1.37f;
-    float newsPapersPricePerKg = 1.37f;
+    float wastePricePerKg = 2.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         month = (TextView) findViewById(R.id.textView2);
         month.setText(String.format("%s %s", StringUtils.capitalize(SrsApplication.months[currentMonth]), instance.get(Calendar.YEAR)));
 
-        float amountDue = wastes.get(0) * householdWastePricePerKg + wastes.get(1) * plasticPackagingPricePerKg + wastes.get(2) * newsPapersPricePerKg;
+        float amountDue = (wastes.get(0) + wastes.get(1) + wastes.get(2)) * wastePricePerKg;
         TextView amountDuetextField = (TextView) findViewById(R.id.textView5);
         amountDuetextField.setText(String.format(Locale.getDefault(), "%.2f SEK", amountDue));
         PieChart pieChart = findViewById(R.id.piechart);

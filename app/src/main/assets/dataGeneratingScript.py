@@ -75,7 +75,7 @@ def generate_user_payments(user_waste_stats):
 				waste_amount_month += waste_kgs
 			price_month = waste_amount_month * PRICES["wastePerKilo"]
 			payment_month = month + 1
-			payment_month_formatted = str(payment_month) if payment_month > 9 else "0" + str(payment_month)
+			payment_month_formatted = str(payment_month + 1) if payment_month > 8 else "0" + str(payment_month + 1)
 			payments[year].append({"month": month, "total_amount": price_month, "payment_date": "{}-{}-{}".format(year if month < 11 else str(int(year) + 1), payment_month_formatted if month < 11 else "01", DAYS_IN_MONTH[month + 1] if month < 11 else DAYS_IN_MONTH[0])})
 	return payments
 

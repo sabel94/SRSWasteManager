@@ -44,7 +44,7 @@ public class UserCostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_cost);
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        BarData data = new BarData(getXAxisValues(0), getDataSet());
+        BarData data = new BarData(getXAxisValues(-1), getDataSet());
         data.setValueFormatter(new SekValueFormatter());
         data.setValueTextSize(11f);
         chart.setData(data);
@@ -97,14 +97,19 @@ public class UserCostActivity extends AppCompatActivity {
     }
 
     private List<BarEntry> getBarEntries() {
-        List<JSONObject> paymentsToShow = getPaymentsInYearUpTo(getCurrentYear(), getCurrentMonth() - 1, NUMBER_OF_MONTHS);
-        if (paymentsToShow.size() < NUMBER_OF_MONTHS) {
-            paymentsToShow.addAll(getPaymentsInYearUpTo(getCurrentYear() - 1, 11, 5 - paymentsToShow.size()));
+        List<JSONObject> paymentsToShowInCurrentYear
+                = getPaymentsInYearUpTo(getCurrentYear(), getCurrentMonth(), NUMBER_OF_MONTHS);
+        if (paymentsToShowInCurrentYear.size() < NUMBER_OF_MONTHS) {
+            paymentsToShowInCurrentYear.addAll(
+                    getPaymentsInYearUpTo(
+                            getCurrentYear() - 1,
+                            11,
+                            5 - paymentsToShowInCurrentYear.size()));
         }
 
         return IntStream.range(0, NUMBER_OF_MONTHS).mapToObj(i -> {
             try {
-                return new BarEntry((float) paymentsToShow.get(i).getDouble("total_amount"), i);
+                return new BarEntry((float) paymentsToShowInCurrentYear.get(i).getDouble("total_amount"), i);
             } catch (JSONException e) {
                 return new BarEntry(0f, i);
             }

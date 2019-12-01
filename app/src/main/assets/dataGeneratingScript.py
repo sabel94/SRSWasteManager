@@ -5,7 +5,7 @@ NO_OF_USERS = 100 # Number of users to create
 YEARS = ["2019"]
 DAYS_IN_MONTH = {0: 31, 1: 28, 2: 31, 3: 30, 4: 31, 5: 30, 6: 31, 7: 31, 8: 30, 9: 31, 10: 30, 11: 31}
 STD_DEVS = {"householdWaste": 1, "plasticPackaging": 0.1, "newspapers": 0.15}
-PRICES = {"wastePerKilo": 1}
+PRICES = {"wastePerKilo": 2}
 
 FIRST_NAMES = ["Karl-Einar", "Rickard", "Johan", "Jesper", "Axel", "Oscar", "Jon", "Mattias", "Jonas", "Erik", "Leo", "Staffan", "Annelie", "Sara", "Ida", "Emma", "Karl", "Gustav", "Albin", "Isak", "Adam", "Robin"]
 LAST_NAMES = ["Renström", "Bard", "Åkesson", "Hamilton", "Andersson", "Eriksson", "Broström", "Sabel", "Hagström", "Karlsson", "Niskanen", "Kokkonen", "Nordlund", "Marklund", "Johansson", "Kingstedt", "Studsare", "Sandkvist"]
@@ -70,8 +70,6 @@ def generate_user_payments(user_waste_stats):
 	for year, year_stats in user_waste_stats["wasteStats"].items():
 		payments[year] = []
 		for month, month_stats in enumerate(year_stats):
-			if month > 10:  # if greater than November
-				continue
 			waste_amount_month = 0
 			for _, waste_kgs in month_stats.items():
 				waste_amount_month += waste_kgs
@@ -89,12 +87,13 @@ for id in range(NO_OF_USERS):
 	json_object[id]["payments"] = generate_user_payments(user_waste_stats)
 
 for key, user_object in json_object.items():
+	user_object["payments"]["2019"][11]["total_amount"] /= 3
 	for key, value in user_object.items():
 		if key == "wasteStats":
 			for year, year_list in value.items():
 				if year == "2019":
 					for month, month_object in enumerate(year_list):
-						if month == "december":
+						if month == 11:
 							for wasteType, amount in month_object.items():
 								month_object[wasteType] = amount / 3
 

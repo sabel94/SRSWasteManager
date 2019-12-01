@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -123,6 +124,11 @@ public class PayActivity extends AppCompatActivity {
                     }
                 })
                 .filter(Objects::nonNull)
+                .filter(payment -> {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(payment.getDate());
+                    return !(calendar.get(Calendar.YEAR) == 2019 && calendar.get(Calendar.MONTH) == 11);
+                })
                 .sorted((payment2, payment1) -> payment1.getDate().compareTo(payment2.getDate()))
                 .collect(Collectors.toList());
     }

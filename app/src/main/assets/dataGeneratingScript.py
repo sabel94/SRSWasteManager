@@ -4,7 +4,7 @@ import numpy as np
 NO_OF_USERS = 100 # Number of users to create
 YEARS = ["2019"]
 DAYS_IN_MONTH = {0: 31, 1: 28, 2: 31, 3: 30, 4: 31, 5: 30, 6: 31, 7: 31, 8: 30, 9: 31, 10: 30, 11: 31}
-STD_DEVS = {"householdWaste": 1, "plasticPackaging": 0.1, "newspapers": 0.15}
+STD_DEVS = {"householdWaste": 3, "plasticPackaging": 0.3, "newspapers": 0.4}
 PRICES = {"wastePerKilo": 2}
 
 FIRST_NAMES = ["Karl-Einar", "Rickard", "Johan", "Jesper", "Axel", "Oscar", "Jon", "Mattias", "Jonas", "Erik", "Leo", "Staffan", "Annelie", "Sara", "Ida", "Emma", "Karl", "Gustav", "Albin", "Isak", "Adam", "Robin"]
@@ -87,7 +87,7 @@ for id in range(NO_OF_USERS):
 	json_object[id]["payments"] = generate_user_payments(user_waste_stats)
 
 for key, user_object in json_object.items():
-	user_object["payments"]["2019"][11]["total_amount"] /= 3
+	user_object["payments"]["2019"][11]["total_amount"] /= 2
 	for key, value in user_object.items():
 		if key == "wasteStats":
 			for year, year_list in value.items():
@@ -95,7 +95,8 @@ for key, user_object in json_object.items():
 					for month, month_object in enumerate(year_list):
 						if month == 11:
 							for wasteType, amount in month_object.items():
-								month_object[wasteType] = amount / 3
+								month_object[wasteType] = amount / 2
+
 
 f = open("database.json", "w")
 f.write(json.dumps(json_object, indent=4))

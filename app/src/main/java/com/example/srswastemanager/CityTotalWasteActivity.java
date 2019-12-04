@@ -29,7 +29,7 @@ public class CityTotalWasteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_city_total_waste);
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        BarData data = new BarData(getXAxisValues(0), getDataSet());
+        BarData data = new BarData(getXAxisValues(-1), getDataSet());
         data.setValueFormatter(new IntValueFormatter());
         data.setValueTextSize(11f);
         chart.setData(data);
@@ -83,7 +83,7 @@ public class CityTotalWasteActivity extends AppCompatActivity {
         valueSet1.add(v1e4);
         BarEntry v1e5 = new BarEntry(48f, 4); // May
         valueSet1.add(v1e5);
-        BarEntry v1e6 = new BarEntry(48f, 5); // Jun
+        BarEntry v1e6 = new BarEntry(24f, 5); // Jun
         valueSet1.add(v1e6);
         BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Your Waste Cost");
         barDataSet1.setColor(Color.parseColor("#4489ff"));

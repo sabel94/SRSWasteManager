@@ -75,7 +75,7 @@ public class CityTotalWasteActivity extends AppCompatActivity {
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
         BarEntry v1e1 = new BarEntry(50f, 0); // Jan
         valueSet1.add(v1e1);
-        BarEntry v1e2 = new BarEntry(56f, 1); // Feb
+        BarEntry v1e2 = new BarEntry(55f, 1); // Feb
         valueSet1.add(v1e2);
         BarEntry v1e3 = new BarEntry(65f, 2); // Mar
         valueSet1.add(v1e3);

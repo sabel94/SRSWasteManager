@@ -29,7 +29,7 @@ public class CityWasteFractionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_city_waste_fractions);
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        BarData data = new BarData(getXAxisValues(0), getDataSet());
+        BarData data = new BarData(getXAxisValues(-1), getDataSet());
         data.setValueFormatter(new IntValueFormatter());
         data.setValueTextSize(11f);
         chart.setData(data);
@@ -82,7 +82,7 @@ public class CityWasteFractionsActivity extends AppCompatActivity {
         valueSet1.add(v1e4);
         BarEntry v1e5 = new BarEntry(38f, 4); // May
         valueSet1.add(v1e5);
-        BarEntry v1e6 = new BarEntry(41f, 5); // Jun
+        BarEntry v1e6 = new BarEntry(20f, 5); // Jun
         valueSet1.add(v1e6);
 
         ArrayList<BarEntry> valueSet2 = new ArrayList<>();
@@ -96,7 +96,7 @@ public class CityWasteFractionsActivity extends AppCompatActivity {
         valueSet2.add(v2e4);
         BarEntry v2e5 = new BarEntry(5f, 4); // May
         valueSet2.add(v2e5);
-        BarEntry v2e6 = new BarEntry(3f, 5); // Jun
+        BarEntry v2e6 = new BarEntry(1f, 5); // Jun
         valueSet2.add(v2e6);
 
         ArrayList<BarEntry> valueSet3 = new ArrayList<>();
@@ -110,7 +110,7 @@ public class CityWasteFractionsActivity extends AppCompatActivity {
         valueSet3.add(v3e4);
         BarEntry v3e5 = new BarEntry(5f, 4); // May
         valueSet3.add(v3e5);
-        BarEntry v3e6 = new BarEntry(4f, 5); // Jun
+        BarEntry v3e6 = new BarEntry(3f, 5); // Jun
         valueSet3.add(v3e6);
 
         BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Household Waste");

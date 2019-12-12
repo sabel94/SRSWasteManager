@@ -9,14 +9,18 @@ import android.widget.TextView;
 
 public class InformationActivity extends AppCompatActivity {
 
-    String q1 = "What can I throw at the waste stations?";
-    String a1 = "This is some random text that will be replaced by a relevant answer.";
-    String q2 = "How big garbage bags can I use?";
-    String a2 = "This is some random text that will be replaced by a relevant answer.";
-    String q3 = "How do I open the disposal chutes?";
+    String q1 = "What is the purpose of this app?";
+    String a1 = "The SRS Waste Manager app will assist and improve your waste management. It enables you to track and pay for your waste amount, but also provides tools that make it easier to understand and use the waste system in SRS.";
+    String q2 = "What can I throw at the waste stations?";
+    String a2 = "You can throw Household waste, Plastic packaging and Newspapers.";
+    String q3 = "How big waste sacks can I use?";
     String a3 = "This is some random text that will be replaced by a relevant answer.";
-    String q4 = "Who do I contact if the waste station system is out of order?";
-    String a4 = "This is some random text that will be replaced by a relevant answer.";
+    String q4 = "How do I open the waste disposal chutes?";
+    String a4 = "The disposal chutes can be opened with your RFID tag.";
+    String q5 = "What should I do if a disposal chute seems to be full despite having the status 'Available'?";
+    String a5 = "Try to push down the top layer. Some object is probably blocking the pipe.";
+    String q6 = "Who do I contact if a disposal chute is out of order?";
+    String a6 = "This is some random text that will be replaced by a relevant answer.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +112,50 @@ public class InformationActivity extends AppCompatActivity {
                     answer4.setVisibility(View.GONE);
                     arrow4.setBackgroundResource(0);
                     arrow4.setBackgroundResource(R.drawable.outline_keyboard_arrow_down_24);
+                }
+            }
+        });
+
+        CardView faq5 = (CardView) findViewById(R.id.faq5);
+        TextView question5 = (TextView) findViewById(R.id.question5);
+        final TextView answer5 = (TextView) findViewById(R.id.answer5);
+        question5.setText(q5);
+        answer5.setText(a5);
+        final ImageView arrow5 = (ImageView) findViewById(R.id.imageView5);
+        arrow5.setBackgroundResource(R.drawable.outline_keyboard_arrow_down_24);
+        faq5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (answer5.getVisibility() == View.GONE) {
+                    answer5.setVisibility(View.VISIBLE);
+                    arrow5.setBackgroundResource(0);
+                    arrow5.setBackgroundResource(R.drawable.outline_keyboard_arrow_up_24);
+                } else {
+                    answer5.setVisibility(View.GONE);
+                    arrow5.setBackgroundResource(0);
+                    arrow5.setBackgroundResource(R.drawable.outline_keyboard_arrow_down_24);
+                }
+            }
+        });
+
+        CardView faq6 = (CardView) findViewById(R.id.faq6);
+        TextView question6 = (TextView) findViewById(R.id.question6);
+        final TextView answer6 = (TextView) findViewById(R.id.answer6);
+        question6.setText(q6);
+        answer6.setText(a6);
+        final ImageView arrow6 = (ImageView) findViewById(R.id.imageView6);
+        arrow6.setBackgroundResource(R.drawable.outline_keyboard_arrow_down_24);
+        faq6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (answer6.getVisibility() == View.GONE) {
+                    answer6.setVisibility(View.VISIBLE);
+                    arrow6.setBackgroundResource(0);
+                    arrow6.setBackgroundResource(R.drawable.outline_keyboard_arrow_up_24);
+                } else {
+                    answer6.setVisibility(View.GONE);
+                    arrow6.setBackgroundResource(0);
+                    arrow6.setBackgroundResource(R.drawable.outline_keyboard_arrow_down_24);
                 }
             }
         });

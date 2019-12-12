@@ -46,14 +46,14 @@ public class UserCostActivity extends AppCompatActivity {
         BarChart chart = (BarChart) findViewById(R.id.chart);
         BarData data = new BarData(getXAxisValues(-1), getDataSet());
         data.setValueFormatter(new SekValueFormatter());
-        data.setValueTextSize(11f);
+        data.setValueTextSize(14f);
         chart.setData(data);
         chart.setDescription("");
-        chart.getXAxis().setTextSize(12f);
+        chart.getXAxis().setTextSize(14f);
         chart.getAxisLeft().setDrawLabels(false);
         chart.getAxisRight().setDrawLabels(false);
         chart.getLegend().setEnabled(false);
-        chart.getLegend().setTextSize(12f);
+        chart.getLegend().setTextSize(14f);
         chart.animateXY(2000, 2000);
         chart.invalidate();
 

@@ -35,34 +35,34 @@
                     "newspapers": 2.29156880250353
                 },
                 {
-                    "householdWaste": 15.015954177104813,
-                    "plasticPackaging": 0.09424563951921139,
-                    "newspapers": 2.571083666188371
+                    "householdWaste": 18.50,
+                    "plasticPackaging": 0.2888,
+                    "newspapers": 2.673
                 },
                 {
-                    "householdWaste": 19.41576014673306,
-                    "plasticPackaging": 1.8105466320013883,
-                    "newspapers": 2.352879125093449
+                    "householdWaste": 15.371,
+                    "plasticPackaging": 1.4333,
+                    "newspapers": 1.8627
                 },
                 {
-                    "householdWaste": 8.163249965594886,
-                    "plasticPackaging": 1.0305680678061975,
-                    "newspapers": 2.508194768932652
+                    "householdWaste": 13.9455,
+                    "plasticPackaging": 1.76055,
+                    "newspapers": 4.2848
                 },
                 {
-                    "householdWaste": 20.832401420686242,
-                    "plasticPackaging": 2.1868949776885684,
-                    "newspapers": 2.8848907468671694
+                    "householdWaste": 12.8199,
+                    "plasticPackaging": 1.3458,
+                    "newspapers": 1.77532
                 },
                 {
-                    "householdWaste": 11.991275688125233,
-                    "plasticPackaging": 2.5139704962135037,
-                    "newspapers": 3.051474610228951
+                    "householdWaste": 9.6596,
+                    "plasticPackaging": 2.025,
+                    "newspapers": 2.4581
                 },
                 {
-                    "householdWaste": 8.78123071251735,
-                    "plasticPackaging": 0.955088660593834,
-                    "newspapers": 1.4098523893094792
+                    "householdWaste": 6.3863,
+                    "plasticPackaging": 0.6946099,
+                    "newspapers": 1.02544
                 }
             ]
         },
@@ -100,32 +100,32 @@
                 },
                 {
                     "month": 6,
-                    "total_amount": 35.362566965624794,
+                    "total_amount": 42.92,
                     "payment_date": "2019-08-31"
                 },
                 {
                     "month": 7,
-                    "total_amount": 47.15837180765579,
+                    "total_amount": 37.33,
                     "payment_date": "2019-09-30"
                 },
                 {
                     "month": 8,
-                    "total_amount": 23.40402560466747,
+                    "total_amount": 39.98,
                     "payment_date": "2019-10-31"
                 },
                 {
                     "month": 9,
-                    "total_amount": 51.808374290483954,
+                    "total_amount": 31.88,
                     "payment_date": "2019-11-30"
                 },
                 {
                     "month": 10,
-                    "total_amount": 35.11344158913538,
+                    "total_amount": 28.29,
                     "payment_date": "2019-12-31"
                 },
                 {
                     "month": 11,
-                    "total_amount": 22.29234352484133,
+                    "total_amount": 16.21,
                     "payment_date": "2020-01-31"
                 }
             ]
@@ -924,7 +924,7 @@
         }
     },
     "7": {
-        "name": "Karl-Einar \u00c5kesson",
+        "name": "Karl-Einar Nilsson",
         "id": 7,
         "wasteStats": {
             "2019": [
@@ -1056,7 +1056,7 @@
         }
     },
     "8": {
-        "name": "Oscar \u00c5kesson",
+        "name": "Oscar Borgman",
         "id": 8,
         "wasteStats": {
             "2019": [

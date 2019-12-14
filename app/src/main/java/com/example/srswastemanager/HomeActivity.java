@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
                 Color.parseColor("#4489ff"),
                 Color.parseColor("#FF3366"),
                 Color.parseColor("#2EC4B6")});
-        dataSet.setValueTextSize(13f);
+        dataSet.setValueTextSize(13.25f);
         dataSet.setValueTextColor(Color.parseColor("#ffffff"));
         pieChart.animateXY(2000, 2000);
 

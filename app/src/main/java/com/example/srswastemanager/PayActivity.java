@@ -1,9 +1,11 @@
 package com.example.srswastemanager;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.KeyEvent;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -141,5 +143,17 @@ public class PayActivity extends AppCompatActivity {
             listItems.add(Html.fromHtml(String.format(Locale.getDefault(), "%s\t\t\t\t\t%s\t\t\t\t\t\t%s\t\t\t\t\t\t<font color=#D2222D>-%.2f SEK</font>", payment.getMonth(), payment.getDueDate(), payment.getPaymentDate(), payment.getAmount())));
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+            return true;
+        }
+        return false;
     }
 }

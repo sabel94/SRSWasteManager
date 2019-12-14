@@ -21,6 +21,7 @@ public class CreditCardListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("Bank Cards");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credit_card_list);
 

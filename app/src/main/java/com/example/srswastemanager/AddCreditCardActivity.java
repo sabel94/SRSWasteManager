@@ -32,6 +32,7 @@ public class AddCreditCardActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("Add Bank Card");
         context = getApplicationContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credit_card);
